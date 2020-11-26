@@ -1,72 +1,105 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-    <meta charset="UTF-8"/>
-    <title th:text="'Create a User'"></title>
-    <link rel="stylesheet" type="text/html"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Admin panel</title>
 </head>
+
 <body>
-<h1 th:text="'Create a User'"></h1>
-<a th:href="@{/admin/users}">Back to User List</a>
-<br/><br/>
-<form th:action="@{/admin/users/add}"
-      th:object="${user}" method="POST">
-    <table>
-        <tr>
-            <td>Login</td>
-            <td>:</td>
-            <td><label>
-                <input type="text" name="login" th:field="*{login}"/>
-            </label></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td>:</td>
-            <td><label>
-                <input type="password" name="password" th:field="*{password}"/>
-            </label></td>
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td>:</td>
-            <td><label>
-                <input type="text" name="name" th:field="*{firstname}"/>
-            </label></td>
-        </tr>
-        <tr>
-            <td>LastName</td>
-            <td>:</td>
-            <td><label>
-                <input type="text" name="lastname" th:field="*{lastname}"/>
-            </label></td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>:</td>
-            <td><label>
-                <input type="text" name="email" th:field="*{email}"/>
-            </label></td>
-        </tr>
-    </table>
-    <tr>
-        <td>
-            <label>User Role</label>
-        </td>
-        <td>
-            <label>
-                <select multiple size="10" th:name="roles">
-                    <div th:each="role : ${roles}">
-                        <option th:value="${role.getId()}" th:selected="${role.id==1}"
-                                th:text="${role.getRole()}"></option>
+
+<div class="container-fluid d-flex h-100 flex-column">
+    <nav class="navbar fixed-top navbar-dark bg-dark">
+        <div>
+            <h4 class="navbar-text font-weight-bolder text-white" th:utext="${user.firstname}">...</h4>
+            <h4 class="navbar-text text-white">with roles:</h4>
+            <h4 class="navbar-text font-weight-bolder text-white" th:utext="${user.showRoles()}">...</h4>
+        </div>
+        <a class="text-white-50" href="#" th:href="@{/logout}">Logout</a>
+    </nav>
+    <div class="row pt-5 bg-light flex-fill d-flex justify-content-start">
+        <div class="col col-md-2 bg-white portlet-container portlet-dropzone">
+            <div class="mt-5 d-inline-block"></div>
+            <div class="list-group">
+                <a href="/admin/users" class="list-group-item active">Admin</a>
+                <a href="/user/info" class="list-group-item">User</a>
+            </div>
+        </div>
+        <div class="col col-md-10 portlet-container portlet-dropzone">
+            <div class="mt-5 d-inline-block" style="width: 100%">
+                <h2 class="text-left font-weight-bold">Admin panel</h2>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/users}">Users table</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/admin/users/add}">New user</a>
+                    </li>
+                </ul>
+                <div class="card text-center">
+                    <div class="card-header font-weight-bolder text-left h-75">
+                        Add new user
                     </div>
-                </select>
-            </label>
-        </td>
-    </tr>
-    <label>
-        <input th:type="submit" th:value="Create"/>
-    </label>
-</form>
-<h2><a th:href="@{/logout}"> Logout </a></h2>
+                    <form class="form mx-auto w-25" name="newUser" th:action="@{/admin/users/add}"
+                          th:object="${newUser}"
+                          method="post">
+
+                        <div class="form-group">
+                            <label for="login" class="font-weight-bolder">Login:</label>
+                            <input th:type="text" class="form-control" id="login"
+                                   name="login">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="font-weight-bolder">Password:</label>
+                            <input th:type="text" class="form-control" id="password"
+                                   name="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName" class="font-weight-bolder">FirstName:</label>
+                            <input th:type="text" class="form-control" id="firstName"
+                                   name="firstname">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" class="font-weight-bolder">LastName:</label>
+                            <input th:type="text" class="form-control" id="lastName"
+                                   name="lastname">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="font-weight-bolder">Email:</label>
+                            <input th:type="text" class="form-control" id="email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bolder">Role</label>
+                            <select multiple class="form-control" id="roles" th:name="roles">
+                                <div th:each="role : ${roles}">
+                                    <option th:value="${role.getId()}" th:selected="${role.id==1}"
+                                            th:text="${role.showRole()}"></option>
+                                </div>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-success text-white w-50" type="submit" value="Add new user"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

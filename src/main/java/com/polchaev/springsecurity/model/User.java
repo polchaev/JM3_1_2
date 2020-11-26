@@ -146,4 +146,21 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public String showRoles() {
+        StringBuilder sb = new StringBuilder();
+        if (roles.isEmpty()) {
+            sb.append("-");
+        } else {
+            for (Role role : roles) {
+                String rl = role.getRole().substring(5);
+                sb.append(rl + ", ");
+            }
+            sb.deleteCharAt(sb.length() - 2);
+//        sb.append(roles.forEach(Role::getRole));
+//        String joinedString = String.join(",", list.stream().map(
+//                e -> e.getName() + " - " + e.getPrice()).collect(Collectors.toList()));
+        }
+        return sb.toString();
+    }
 }
