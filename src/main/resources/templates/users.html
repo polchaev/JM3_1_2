@@ -72,15 +72,19 @@
                                 <td th:text="${user.getEmail()}"></td>
                                 <td th:text="${user.showRoles()}"></td>
 
-                                <td class="p-2" style="width: 9%"><a class="btn btn-info text-white"
-                                                                     data-toggle="modal"
-                                                                     data-target="#editUser"
-                                                                     th:attrappend="data-target=${user.id}">Edit</a>
+
+<!--                                https://stackoverflow.com/questions/52937504/thymeleaf-modal-data-target-and-id-update-in-the-loop-->
+
+
+                                <td><a class="btn btn-info text-white"
+                                       data-toggle="modal"
+                                       data-target="#editUser"
+                                       th:attrappend="data-target=${user.id}">Edit</a>
                                 </td>
-                                <td class="p-2" style="width: 9%"><a class="btn btn-danger text-white"
-                                                                     data-toggle="modal"
-                                                                     data-target="#deleteUser"
-                                                                     th:attrappend="data-target=${user.id}">Delete</a>
+                                <td><a class="btn btn-danger text-white"
+                                       data-toggle="modal"
+                                       data-target="#deleteUser"
+                                       th:attrappend="data-target=${user.id}">Delete</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -96,64 +100,64 @@
 <!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
 <!-- Modal -->
-<div class="modal" id="addUser" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalCenteredLabel"
-     aria-hidden="true">
-    <form th:action="@{/admin/users/add}"
-          method="POST">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenteredLabel">New user</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="login" class="col-form-label">Login:</label>
-                        <input th:type="text" class="form-control" id="login" name="login">
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="col-form-label">Password:</label>
-                        <input th:type="text" class="form-control" id="password"
-                               name="password">
-                    </div>
-                    <div class="form-group">
-                        <label for="firstName" class="col-form-label">FirstName:</label>
-                        <input th:type="text" class="form-control" id="firstName"
-                               name="firstname">
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName" class="col-form-label">LastName:</label>
-                        <input th:type="text" class="form-control" id="lastName"
-                               name="lastname">
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="col-form-label">Email:</label>
-                        <input th:type="text" class="form-control" id="email" name="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="roles">Role:</label>
-                        <select multiple class="form-control" id="roles" th:name="roles">
-                            <div th:each="role : ${roles}">
-                                <option th:value="${role.getId()}" th:selected="${role.id==1}"
-                                        th:text="${role.showRole()}"></option>
-                            </div>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                    </button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
+<!--<div class="modal" id="addUser" tabindex="-1" role="dialog"-->
+<!--     aria-labelledby="exampleModalCenteredLabel"-->
+<!--     aria-hidden="true">-->
+<!--    <form th:action="@{/admin/users/add}"-->
+<!--          method="POST">-->
+<!--        <div class="modal-dialog modal-dialog-centered" role="document">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h5 class="modal-title" id="exampleModalCenteredLabel">New user</h5>-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="login" class="col-form-label">Login:</label>-->
+<!--                        <input th:type="text" class="form-control" id="login" name="login">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="password" class="col-form-label">Password:</label>-->
+<!--                        <input th:type="text" class="form-control" id="password"-->
+<!--                               name="password">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="firstName" class="col-form-label">FirstName:</label>-->
+<!--                        <input th:type="text" class="form-control" id="firstName"-->
+<!--                               name="firstname">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="lastName" class="col-form-label">LastName:</label>-->
+<!--                        <input th:type="text" class="form-control" id="lastName"-->
+<!--                               name="lastname">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="email" class="col-form-label">Email:</label>-->
+<!--                        <input th:type="text" class="form-control" id="email" name="email">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="roles">Role:</label>-->
+<!--                        <select multiple class="form-control" id="roles" th:name="roles">-->
+<!--                            <div th:each="role : ${roles}">-->
+<!--                                <option th:value="${role.getId()}" th:selected="${role.id==1}"-->
+<!--                                        th:text="${role.showRole()}"></option>-->
+<!--                            </div>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close-->
+<!--                    </button>-->
+<!--                    <button type="submit" class="btn btn-primary">Save</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
 
-<!--            TRYEDITMODAL-->
+<!--            EDITMODAL-->
 
 <div id="editUser" th:attrappend="id=${user.id}" class="modal fade"
      th:each="user : ${userList}">
@@ -225,7 +229,6 @@
 </div>
 
 
-
 <div id="deleteUser" th:attrappend="id=${user.id}" class="modal fade"
      th:each="user : ${userList}">
     <form class="form" name="deleteUser"
@@ -295,14 +298,6 @@
     </form>
 </div>
 
-</div>
-</div>
-</div>
-
-<h3>
-    <a th:href="@{/admin/users/add}">Create user</a>
-</h3>
-<h2><a th:href="@{/logout}"> Logout </a></h2>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
